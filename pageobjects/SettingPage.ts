@@ -15,13 +15,13 @@ class SettingPage extends BasePage {
 
 
 
-async openSettings() {
+async openSettings():  Promise<void> {
     await driver.terminateApp('com.android.settings');
     await driver.activateApp('com.android.settings');
 }
    
 
-    async openNetworkInternet() {
+    async openNetworkInternet(): Promise<void> {
 
         await this.networkInternetById.waitForDisplayed({
             timeout: 10000,
