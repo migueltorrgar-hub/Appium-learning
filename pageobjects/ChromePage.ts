@@ -1,18 +1,18 @@
 import { expect } from '@wdio/globals';
+import BasePage from './BasePage';
 
-
-class ChromePage {
+class ChromePage extends BasePage {
 
     get chromeIcon() {
         return $('~Chrome');
     }
 
-    async expectChromeDisplayed() {
+    async expectChromeDisplayed(): Promise<void> {
         await expect(this.chromeIcon).toBeDisplayed();
     }
 
-async openChrome() {
-    await this.chromeIcon.click();
+    async openChrome(): Promise<void> {
+        await this.chromeIcon.click();
     }
 
 }
