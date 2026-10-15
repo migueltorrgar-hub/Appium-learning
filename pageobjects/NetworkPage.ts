@@ -1,6 +1,7 @@
 import { expect, browser } from '@wdio/globals';
+import BasePage from './BasePage';
 
-class NetworkPage {
+class NetworkPage extends BasePage {
 
     get internetTitle() {
          return $( 'android=new UiSelector().resourceId("android:id/title").text("Internet")');
@@ -80,7 +81,7 @@ async restoreWifiState(initialState: boolean): Promise<void> {
     }
 }
 
-async openInternet() {
+async openInternet(): Promise<void> {
     await this.internetTitle.waitForDisplayed({
         timeout: 5000,
     });
@@ -89,7 +90,7 @@ async openInternet() {
 }
 
 
-async tapWifiSwitch() {
+async tapWifiSwitch(): Promise<void> {
     await this.wifiSwitch.waitForDisplayed({
         timeout: 5000,
     });
@@ -98,7 +99,7 @@ async tapWifiSwitch() {
 }
 
 
-async openWifi() {
+async openWifi(): Promise<void> {
     await this.wifi.waitForDisplayed({
         timeout: 10000,
         timeoutMsg: 'The Wi-Fi option was not displayed',
@@ -108,7 +109,7 @@ async openWifi() {
 }
 
 
-async expectConnected() {
+async expectConnected(): Promise<void> {
     await this.connected.waitForDisplayed({
         timeout: 5000,
     });
@@ -118,7 +119,7 @@ async expectConnected() {
     expect(connectionText).toContain('Connected');
 }
 
-    async expectWifiPage() {
+    async expectWifiPage(): Promise<void> {
 
         await expect(this.wifi).toBeDisplayed();
 
@@ -130,7 +131,7 @@ async isWifiEnabled(): Promise<boolean> {
     return await this.getWifiSwitchState();
 }
 
-async expectInternetPage() {
+async expectInternetPage(): Promise<void> {
     await this.internetTitle.waitForDisplayed({
         timeout: 10000,
         timeoutMsg: 'The Internet screen was not displayed',

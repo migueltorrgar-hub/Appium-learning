@@ -2,11 +2,11 @@ import { driver } from '@wdio/globals';
 
 class BasePage {
 
-    async goToHome() {
+    async goToHome(): Promise<void> {
         await driver.pressKeyCode(3);
     }
 
-    async goBack() {
+    async goBack(): Promise<void> {
     await driver.pressKeyCode(4);
 }
 
