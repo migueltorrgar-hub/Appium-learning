@@ -1,0 +1,23 @@
+{
+  "name": "appium-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "dependencies": {
+    "@wdio/appium-service": "^10.0.0",
+    "@wdio/local-runner": "^10.0.0",
+    "@wdio/mocha-framework": "^10.0.0",
+    "@wdio/spec-reporter": "^10.0.0",
+    "webdriverio": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}
