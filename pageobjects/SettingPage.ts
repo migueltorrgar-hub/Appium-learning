@@ -1,34 +1,27 @@
-
-import BasePage from './BasePage';
-
 import { driver } from '@wdio/globals';
+import BasePage from './BasePage';
 
 class SettingPage extends BasePage {
 
-   
- get networkInternetById() {
-    return $(
-        'android=new UiSelector().resourceId("android:id/title").text("Network & internet")'
-    );
-}
+    get networkInternetById() {
+        return $(
+            'android=new UiSelector().resourceId("android:id/title").text("Network & internet")'
+        );
+    }
 
-
-
-
-async openSettings():  Promise<void> {
-    await driver.terminateApp('com.android.settings');
-    await driver.activateApp('com.android.settings');
-}
-   
+    async openSettings(): Promise<void> {
+        await driver.terminateApp('com.android.settings');
+        await driver.activateApp('com.android.settings');
+    }
 
     async openNetworkInternet(): Promise<void> {
-
         await this.networkInternetById.waitForDisplayed({
             timeout: 10000,
         });
 
         await this.networkInternetById.click();
     }
+
 }
 
 export default new SettingPage();
