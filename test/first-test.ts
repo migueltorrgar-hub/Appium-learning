@@ -15,7 +15,7 @@ describe('Android Settings', () => {
     
 });
 
-it('should verify Chrome is not displayed on the home screen', async () => {
+it('should verify Chrome is displayed on the home screen', async () => {
     await SettingPage.goToHome();
 
     await expect(ChromePage.chromeIcon).toBeDisplayed();
@@ -27,6 +27,12 @@ it('should verify Chrome is not displayed on the home screen', async () => {
         await NetworkPage.expectInternetPage();
     }
 
+    it('should open Chrome using accessibility id', async () => {
+    await SettingPage.goToHome();
+
+    await ChromePage.expectChromeDisplayed();
+    await ChromePage.openChrome();
+});
 
     it('should open Android Settings', async () => {
 
@@ -53,32 +59,20 @@ it('should navigate to Wi-Fi and verify connection', async () => {
     await NetworkPage.openWifi();
     await NetworkPage.expectWifiPage();
 
-    let isWifiEnabled = await NetworkPage.getWifiSwitchState();
+    const initialWifiState = await NetworkPage.getWifiSwitchState();
 
-    if (!isWifiEnabled) {
-        await NetworkPage.tapWifiSwitch();
+    try {
+        if (!initialWifiState) {
+            await NetworkPage.toggleWifiAndWait();
+        }
 
-        await browser.waitUntil(
-            async () => await NetworkPage.getWifiSwitchState(),
-            {
-                timeout: 10000,
-                timeoutMsg: 'Wi-Fi did not turn on',
-            }
-        );
+        await NetworkPage.expectWifiSwitchEnabled();
+        await NetworkPage.expectConnected();
+    } finally {
+        await NetworkPage.restoreWifiState(initialWifiState);
     }
-
-    await NetworkPage.expectWifiSwitchEnabled();
-    await NetworkPage.expectConnected();
 });
 
-
-
-    it('should find Chrome using accessibility id', async () => {
-    
-   await ChromePage.expectChromeDisplayed();
-   await ChromePage.openChrome();
-
-});
 
 it('should locate the Wi-Fi switch specifically', async () => {
     await openInternetSettings();
