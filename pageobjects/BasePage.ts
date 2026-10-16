@@ -12,6 +12,16 @@ class BasePage {
         await driver.pressKeyCode(4);
     }
 
+     // Waits until an element is displayed
+    async waitForElementDisplayed(
+        element: WebdriverIO.Element,
+        timeout: number = 10000
+    ): Promise<void> {
+        await element.waitForDisplayed({
+            timeout,
+        });
+    }
+
 }
 
 export default BasePage;

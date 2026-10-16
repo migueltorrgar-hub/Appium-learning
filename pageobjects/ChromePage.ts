@@ -12,6 +12,7 @@ class ChromePage extends BasePage {
     }
 
     async openChrome(): Promise<void> {
+        await this.waitForElementDisplayed(this.chromeIcon);
         await this.chromeIcon.click();
     }
 

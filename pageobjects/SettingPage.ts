@@ -15,13 +15,11 @@ class SettingPage extends BasePage {
     }
 
     async openNetworkInternet(): Promise<void> {
-    const networkInternet = this.networkInternetById;
+        const networkInternet = this.networkInternetById;
 
-    await networkInternet.waitForDisplayed({
-        timeout: 10000,
-    });
+        await this.waitForElementDisplayed(networkInternet);
 
-    await networkInternet.click();
+        await networkInternet.click();
 }
 
 }
