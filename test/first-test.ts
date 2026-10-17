@@ -112,6 +112,17 @@ it('should verify the Wi-Fi switch state', async () => {
     expect(isWifiEnabled).toBe(true);
 });
 
+it('should verify the Wi-Fi switch is enabled for interaction', async () => {
+    await openInternetSettings();
+    await NetworkPage.openInternet();
+
+    const isEnabled = await NetworkPage.isWifiSwitchElementEnabled();
+
+    console.log('Wi-Fi switch element enabled:', isEnabled);
+
+    expect(isEnabled).toBe(true);
+});
+
 it('should toggle the Wi-Fi switch and restore its state', async () => {
     await openInternetSettings();
     await NetworkPage.openInternet();

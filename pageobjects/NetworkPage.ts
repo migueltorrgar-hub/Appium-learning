@@ -50,6 +50,16 @@ async getWifiSwitchState(): Promise<boolean> {
     return checked === 'true';
 }
 
+
+async isWifiSwitchElementEnabled(): Promise<boolean> {
+    await this.wifiSwitch.waitForDisplayed({
+        timeout: 5000,
+        timeoutMsg: 'Wi-Fi switch was not displayed',
+    });
+
+    return await this.wifiSwitch.isEnabled();
+}
+
 async toggleWifiAndWait(): Promise<void> {
     const initialState = await this.getWifiSwitchState();
 
