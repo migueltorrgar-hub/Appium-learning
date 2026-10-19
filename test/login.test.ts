@@ -19,4 +19,13 @@ describe('Login functionality', () => {
 
         expect(message).toContain('You logged into a secure area!');
     });
+
+     it('should display an error message with invalid credentials', async () => {
+        await loginPage.enterUsername('wronguser');
+        await loginPage.enterPassword('wrongpassword');
+        await loginPage.clickLogin();
+
+        const message = await loginPage.getFlashMessage();
+        expect(message).toContain('Your username is invalid!');
+    });
 });
