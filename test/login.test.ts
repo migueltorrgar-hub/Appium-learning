@@ -13,9 +13,11 @@ describe('Login functionality', () => {
     it('should log in successfully with valid credentials', async () => {
         await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
-        const message = await loginPage.getFlashMessage();
+       await expect(loginPage.flashMessage).toBeDisplayed();
 
-        expect(message).toContain('You logged into a secure area!');
+        await expect(loginPage.flashMessage).toHaveText(
+        expect.stringContaining('You logged into a secure area!')
+);
     });
 
      it('should display an error message with invalid credentials', async () => {
@@ -33,6 +35,12 @@ describe('Login functionality', () => {
         expect(successMessage).toContain('You logged into a secure area!');
 
         await loginPage.clickLogout();
+
+        await expect(loginPage.flashMessage).toBeDisplayed();
+
+        await expect(loginPage.flashMessage).toHaveText(
+        expect.stringContaining('You logged out of the secure area!')
+);
 
         await expect(loginPage.usernameInput).toBeDisplayed();
         await expect(loginPage.passwordInput).toBeDisplayed();
