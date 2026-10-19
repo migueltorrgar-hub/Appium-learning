@@ -11,9 +11,7 @@ describe('Login functionality', () => {
     });
 
     it('should log in successfully with valid credentials', async () => {
-        await loginPage.enterUsername('tomsmith');
-        await loginPage.enterPassword('SuperSecretPassword!');
-        await loginPage.clickLogin();
+        await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
         const message = await loginPage.getFlashMessage();
 
@@ -31,9 +29,7 @@ describe('Login functionality', () => {
 
 
     it('should log out successfully after logging in', async () => {
-        await loginPage.enterUsername('tomsmith');
-        await loginPage.enterPassword('SuperSecretPassword!');
-        await loginPage.clickLogin();
+        await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
         const successMessage = await loginPage.getFlashMessage();
         expect(successMessage).toContain('You logged into a secure area!');
