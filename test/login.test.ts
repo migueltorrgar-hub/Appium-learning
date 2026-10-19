@@ -28,4 +28,19 @@ describe('Login functionality', () => {
         const message = await loginPage.getFlashMessage();
         expect(message).toContain('Your username is invalid!');
     });
+
+
+    it('should log out successfully after logging in', async () => {
+        await loginPage.enterUsername('tomsmith');
+        await loginPage.enterPassword('SuperSecretPassword!');
+        await loginPage.clickLogin();
+
+        const successMessage = await loginPage.getFlashMessage();
+        expect(successMessage).toContain('You logged into a secure area!');
+
+        await loginPage.clickLogout();
+
+        await expect(loginPage.usernameInput).toBeDisplayed();
+        await expect(loginPage.passwordInput).toBeDisplayed();
+    });
 });
