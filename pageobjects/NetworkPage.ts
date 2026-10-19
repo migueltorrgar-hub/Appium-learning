@@ -109,6 +109,16 @@ async tapWifiSwitch(): Promise<void> {
 }
 
 
+async tapWifiSwitchSafely(): Promise<void> {
+    const isEnabled = await this.isWifiSwitchElementEnabled();
+
+    if (!isEnabled) {
+        throw new Error('Wi-Fi switch is disabled and cannot be interacted with');
+    }
+
+    await this.tapWifiSwitch();
+}
+
 async openWifi(): Promise<void> {
     await this.wifi.waitForDisplayed({
         timeout: 10000,
