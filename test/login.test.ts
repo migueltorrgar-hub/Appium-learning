@@ -19,9 +19,7 @@ describe('Login functionality', () => {
     });
 
      it('should display an error message with invalid credentials', async () => {
-        await loginPage.enterUsername('wronguser');
-        await loginPage.enterPassword('wrongpassword');
-        await loginPage.clickLogin();
+        await loginPage.login('wronguser', 'wrongpassword');
 
         const message = await loginPage.getFlashMessage();
         expect(message).toContain('Your username is invalid!');
