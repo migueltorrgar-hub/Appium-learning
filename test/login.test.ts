@@ -23,8 +23,12 @@ describe('Login functionality', () => {
      it('should display an error message with invalid credentials', async () => {
         await loginPage.login('wronguser', 'wrongpassword');
 
-        const message = await loginPage.getFlashMessage();
-        expect(message).toContain('Your username is invalid!');
+          await expect(loginPage.flashMessage).toBeDisplayed();
+
+         await expect(loginPage.flashMessage).toHaveText(
+        expect.stringContaining('Your username is invalid!')
+        );
+
     });
 
 
@@ -44,5 +48,8 @@ describe('Login functionality', () => {
 
         await expect(loginPage.usernameInput).toBeDisplayed();
         await expect(loginPage.passwordInput).toBeDisplayed();
+
+        await expect(loginPage.logoutButton).not.toBeDisplayed();
+
     });
 });
