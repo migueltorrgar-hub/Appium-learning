@@ -33,6 +33,12 @@ class LoginPage extends BasePage {
         await this.loginButton.click();
     }
 
+     async login(username: string, password: string): Promise<void> {
+        await this.enterUsername(username);
+        await this.enterPassword(password);
+        await this.clickLogin();
+    }
+
     async clickLogout(): Promise<void> {
     await this.logoutButton.click();
 }
