@@ -13,6 +13,10 @@ class LoginPage extends BasePage {
         return $('button[type="submit"]');
     }
 
+    get logoutButton() {
+    return $('a[href="/logout"]');
+}
+
     get flashMessage() {
         return $('#flash');
     }
@@ -28,6 +32,10 @@ class LoginPage extends BasePage {
     async clickLogin(): Promise<void> {
         await this.loginButton.click();
     }
+
+    async clickLogout(): Promise<void> {
+    await this.logoutButton.click();
+}
 
     async getFlashMessage(): Promise<string> {
         return (await this.flashMessage.getText()).trim();
