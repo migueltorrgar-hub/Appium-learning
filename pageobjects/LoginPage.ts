@@ -41,10 +41,14 @@ class LoginPage extends BasePage {
 
     async clickLogout(): Promise<void> {
     await this.logoutButton.click();
-}
+    }
 
     async getFlashMessage(): Promise<string> {
         return (await this.flashMessage.getText()).trim();
+    }
+
+    async isFlashMessageDisplayed(): Promise<boolean> {
+    return await this.flashMessage.isDisplayed();
     }
 }
 

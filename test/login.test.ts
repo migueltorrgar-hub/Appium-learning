@@ -13,6 +13,8 @@ describe('Login functionality', () => {
     it('should log in successfully with valid credentials', async () => {
         await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
+        await expect(loginPage.flashMessage).toBeDisplayed();
+
        await expect(loginPage.flashMessage).toBeDisplayed();
 
         await expect(loginPage.flashMessage).toHaveText(
@@ -35,8 +37,10 @@ describe('Login functionality', () => {
     it('should log out successfully after logging in', async () => {
         await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
-        const successMessage = await loginPage.getFlashMessage();
-        expect(successMessage).toContain('You logged into a secure area!');
+       await expect(loginPage.flashMessage).toHaveText(
+        expect.stringContaining('You logged into a secure area!')
+    );
+        
 
         await loginPage.clickLogout();
 
