@@ -1,6 +1,14 @@
 import { browser, expect } from '@wdio/globals';
 import LoginPage from '../pageobjects/LoginPage';
 
+const validUsername = 'tomsmith';
+const validPassword = 'SuperSecretPassword!';
+const invalidUsername = 'wronguser';
+const invalidPassword = 'wrongpassword';
+
+
+
+
 describe('Login functionality', () => {
     let loginPage: LoginPage;
 
@@ -11,7 +19,7 @@ describe('Login functionality', () => {
     });
 
     it('should log in successfully with valid credentials', async () => {
-    await loginPage.login('tomsmith', 'SuperSecretPassword!');
+    await loginPage.login(validUsername, validPassword);
 
     await expect(loginPage.flashMessage).toBeDisplayed();
     await expect(loginPage.flashMessage).toHaveText(
@@ -20,7 +28,7 @@ describe('Login functionality', () => {
     });
 
      it('should display an error message with invalid credentials', async () => {
-        await loginPage.login('wronguser', 'wrongpassword');
+        await loginPage.login(invalidUsername, invalidPassword);
 
          await loginPage.expectFlashMessageToContain(
             'Your username is invalid!'
