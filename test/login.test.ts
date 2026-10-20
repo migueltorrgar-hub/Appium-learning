@@ -15,7 +15,6 @@ describe('Login functionality', () => {
 
         await expect(loginPage.flashMessage).toBeDisplayed();
 
-       await expect(loginPage.flashMessage).toBeDisplayed();
 
         await expect(loginPage.flashMessage).toHaveText(
         expect.stringContaining('You logged into a secure area!')
@@ -30,6 +29,16 @@ describe('Login functionality', () => {
         );
 
     });
+
+
+it('should display an error message when login fields are empty', async () => {
+    await loginPage.login('', '');
+
+    await loginPage.expectFlashMessageToContain(
+        'Your username is invalid!'
+    );
+});
+
 
 
     it('should log out successfully after logging in', async () => {
