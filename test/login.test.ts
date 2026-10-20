@@ -11,14 +11,12 @@ describe('Login functionality', () => {
     });
 
     it('should log in successfully with valid credentials', async () => {
-        await loginPage.login('tomsmith', 'SuperSecretPassword!');
+    await loginPage.login('tomsmith', 'SuperSecretPassword!');
 
-        await expect(loginPage.flashMessage).toBeDisplayed();
-
-
-        await expect(loginPage.flashMessage).toHaveText(
+    await expect(loginPage.flashMessage).toBeDisplayed();
+    await expect(loginPage.flashMessage).toHaveText(
         expect.stringContaining('You logged into a secure area!')
-);
+        );
     });
 
      it('should display an error message with invalid credentials', async () => {
