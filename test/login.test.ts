@@ -23,10 +23,8 @@ describe('Login functionality', () => {
     it('should log in successfully with valid credentials', async () => {
     await loginPage.login(validUsername, validPassword);
 
-    await expect(loginPage.flashMessage).toBeDisplayed();
-    await expect(loginPage.flashMessage).toHaveText(
-        expect.stringContaining('You logged into a secure area!')
-        );
+    await loginPage.expectSuccessfulLoginMessage();
+    
     });
 
      it('should display an error message with invalid credentials', async () => {
