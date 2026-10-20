@@ -1,10 +1,12 @@
 import { browser, expect } from '@wdio/globals';
 import LoginPage from '../pageobjects/LoginPage';
 
-const validUsername = 'tomsmith';
-const validPassword = 'SuperSecretPassword!';
-const invalidUsername = 'wronguser';
-const invalidPassword = 'wrongpassword';
+import {
+    validUsername,
+    validPassword,
+    invalidUsername,
+    invalidPassword
+} from './test-data/login-data';
 
 
 
@@ -48,7 +50,7 @@ it('should display an error message when login fields are empty', async () => {
 
 
     it('should log out successfully after logging in', async () => {
-        await loginPage.login('tomsmith', 'SuperSecretPassword!');
+        await loginPage.login(validUsername, validPassword);
 
        await expect(loginPage.flashMessage).toHaveText(
         expect.stringContaining('You logged into a secure area!')
