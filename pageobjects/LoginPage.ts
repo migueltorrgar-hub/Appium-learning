@@ -1,4 +1,5 @@
 import BasePage from './BasePage';
+import { expect } from '@wdio/globals';
 
 class LoginPage extends BasePage {
     get usernameInput() {
@@ -51,6 +52,13 @@ class LoginPage extends BasePage {
     async isFlashMessageDisplayed(): Promise<boolean> {
     return await this.flashMessage.isDisplayed();
     }
+
+    async expectFlashMessageToContain(expectedText: string): Promise<void> {
+    await expect(this.flashMessage).toBeDisplayed();
+    await expect(this.flashMessage).toHaveText(
+        expect.stringContaining(expectedText)
+    );
+}
 }
 
 export default LoginPage;
