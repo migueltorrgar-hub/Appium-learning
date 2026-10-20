@@ -44,8 +44,9 @@ class LoginPage extends BasePage {
     }
 
     async getFlashMessage(): Promise<string> {
-        return (await this.flashMessage.getText()).trim();
-    }
+    await this.flashMessage.waitForDisplayed({ timeout: 5000 });
+    return (await this.flashMessage.getText()).trim();
+}
 
     async isFlashMessageDisplayed(): Promise<boolean> {
     return await this.flashMessage.isDisplayed();
