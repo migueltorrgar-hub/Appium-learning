@@ -59,6 +59,13 @@ class LoginPage extends BasePage {
         expect.stringContaining(expectedText)
     );
 }
+
+    async expectSuccessfulLoginMessage(): Promise<void> {
+    await this.expectFlashMessageToContain(
+        'You logged into a secure area!'
+    );
+}
+
 }
 
 export default LoginPage;
