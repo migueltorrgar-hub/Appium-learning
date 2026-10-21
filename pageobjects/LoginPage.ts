@@ -66,6 +66,12 @@ class LoginPage extends BasePage {
     );
 }
 
+    async expectSuccessfulLogoutMessage(): Promise<void> {
+    await this.expectFlashMessageToContain(
+        'You logged out of the secure area!'
+    );
+}
+
 }
 
 export default LoginPage;

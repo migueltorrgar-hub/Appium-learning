@@ -53,10 +53,7 @@ it('should log out successfully after logging in', async () => {
 
     await loginPage.clickLogout();
 
-    await expect(loginPage.flashMessage).toBeDisplayed();
-    await expect(loginPage.flashMessage).toHaveText(
-        expect.stringContaining('You logged out of the secure area!')
-    );
+    await loginPage.expectSuccessfulLogoutMessage();
 
     await expect(loginPage.usernameInput).toBeDisplayed();
     await expect(loginPage.passwordInput).toBeDisplayed();
