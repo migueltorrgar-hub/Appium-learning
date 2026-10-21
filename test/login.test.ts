@@ -46,27 +46,21 @@ it('should display an error message when login fields are empty', async () => {
 });
 
 
+it('should log out successfully after logging in', async () => {
+    await loginPage.login(validUsername, validPassword);
 
-    it('should log out successfully after logging in', async () => {
-        await loginPage.login(validUsername, validPassword);
+    await loginPage.expectSuccessfulLoginMessage();
 
-       await expect(loginPage.flashMessage).toHaveText(
-        expect.stringContaining('You logged into a secure area!')
-    );
-        
+    await loginPage.clickLogout();
 
-        await loginPage.clickLogout();
-
-        await expect(loginPage.flashMessage).toBeDisplayed();
-
-        await expect(loginPage.flashMessage).toHaveText(
+    await expect(loginPage.flashMessage).toBeDisplayed();
+    await expect(loginPage.flashMessage).toHaveText(
         expect.stringContaining('You logged out of the secure area!')
-);
+    );
 
-        await expect(loginPage.usernameInput).toBeDisplayed();
-        await expect(loginPage.passwordInput).toBeDisplayed();
+    await expect(loginPage.usernameInput).toBeDisplayed();
+    await expect(loginPage.passwordInput).toBeDisplayed();
+    await expect(loginPage.logoutButton).not.toBeDisplayed();
+});
 
-        await expect(loginPage.logoutButton).not.toBeDisplayed();
-
-    });
 });
