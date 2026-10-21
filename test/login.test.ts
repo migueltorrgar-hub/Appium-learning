@@ -36,6 +36,14 @@ describe('Login functionality', () => {
 
     });
 
+    it('should display an error message when the password is incorrect', async () => {
+    await loginPage.login(validUsername, invalidPassword);
+
+    await loginPage.expectFlashMessageToContain(
+        'Your password is invalid!'
+    );
+});
+
 
 it('should display an error message when login fields are empty', async () => {
     await loginPage.login('', '');
