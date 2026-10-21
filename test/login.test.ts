@@ -68,4 +68,23 @@ it('should log out successfully after logging in', async () => {
     await expect(loginPage.logoutButton).not.toBeDisplayed();
 });
 
+it('should deny access to the secure page after logout', async () => {
+    await loginPage.login(validUsername, validPassword);
+
+    await loginPage.expectSuccessfulLoginMessage();
+
+    await loginPage.clickLogout();
+
+    await loginPage.expectSuccessfulLogoutMessage();
+
+    await browser.url('https://the-internet.herokuapp.com/secure');
+
+    await loginPage.expectFlashMessageToContain(
+         'You must login to view the secure area!'
+    );
+
+    await expect(loginPage.usernameInput).toBeDisplayed();
+    await expect(loginPage.passwordInput).toBeDisplayed();
+});
+
 });
