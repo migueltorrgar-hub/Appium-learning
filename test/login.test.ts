@@ -24,7 +24,8 @@ describe('Login functionality', () => {
     await loginPage.login(validUsername, validPassword);
 
     await loginPage.expectSuccessfulLoginMessage();
-    
+
+    await expect(loginPage.logoutButton).toBeDisplayed();
     });
 
      it('should display an error message with invalid credentials', async () => {
