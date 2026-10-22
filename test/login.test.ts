@@ -34,7 +34,17 @@ describe('Login functionality', () => {
             'Your username is invalid!'
         );
 
-    });
+      });
+
+
+    it('should display an error message when the username is incorrect', async () => {
+    await loginPage.login(invalidUsername, validPassword);
+    await loginPage.expectFlashMessageToContain(
+        'Your username is invalid!'
+    );
+});
+
+    
 
     it('should display an error message when the password is incorrect', async () => {
     await loginPage.login(validUsername, invalidPassword);
