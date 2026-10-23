@@ -29,6 +29,14 @@ class SauceDemoPage {
         return $('.shopping_cart_link');
     }
 
+    get checkoutButton() {
+        return $('#checkout');
+    }
+
+    get continueButton() {
+        return $('#continue');
+    }
+
     get shoppingCartBadge() {
         return $('.shopping_cart_badge');
     }
@@ -39,6 +47,18 @@ class SauceDemoPage {
 
     get productPrices() {
         return $$('.inventory_item_price');
+    }
+
+    get firstNameInput() {
+        return $('#first-name');
+    }
+
+    get lastNameInput() {
+        return $('#last-name');
+    }
+
+    get postalCodeInput() {
+        return $('#postal-code');
     }
 
    async resetCart(): Promise<void> {
@@ -70,6 +90,14 @@ class SauceDemoPage {
         await this.shoppingCartLink.click();
     }
 
+    async clickCheckout(): Promise<void> {
+        await this.checkoutButton.click();
+    }
+
+    async clickContinue(): Promise<void> {
+        await this.continueButton.click();
+    }
+
     async removeProductFromCart(productId: string): Promise<void> {
         await this.removeFromCartButton(productId).click();
     }
@@ -80,6 +108,16 @@ class SauceDemoPage {
 
     private removeFromCartButton(productId: string) {
         return $(`#remove-${productId}`);
+    }
+
+    async enterCheckoutInformation(
+    firstName: string,
+    lastName: string,
+    postalCode: string
+    ): Promise<void> {
+    await this.firstNameInput.setValue(firstName);
+    await this.lastNameInput.setValue(lastName);
+    await this.postalCodeInput.setValue(postalCode);
     }
 }
 
