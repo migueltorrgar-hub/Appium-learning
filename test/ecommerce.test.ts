@@ -72,9 +72,9 @@ describe('SauceDemo shopping cart', () => {
     await sauceDemoPage.clickCheckout();
 
     await sauceDemoPage.enterCheckoutInformation(
-        'Miguel',
-        'Torres',
-        '03008'
+        'Paco',
+        'Pil',
+        '03123'
     );
 
     await sauceDemoPage.clickContinue();
@@ -82,5 +82,9 @@ describe('SauceDemo shopping cart', () => {
     await expect($('.summary_subtotal_label')).toHaveText(
         'Item total: $39.98'
     );
+    
+    await expect(sauceDemoPage.taxLabel).toHaveText('Tax: $3.20');
+
+    await expect(sauceDemoPage.totalLabel).toHaveText('Total: $43.18');
     });
 });

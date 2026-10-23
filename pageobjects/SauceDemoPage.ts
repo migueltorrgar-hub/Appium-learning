@@ -61,6 +61,14 @@ class SauceDemoPage {
         return $('#postal-code');
     }
 
+    get taxLabel() {
+        return $('.summary_tax_label');
+    }
+
+    get totalLabel() {
+        return $('.summary_total_label');
+    }
+
    async resetCart(): Promise<void> {
         await browser.execute(() => {
         window.localStorage.removeItem('cart-contents');
@@ -119,6 +127,8 @@ class SauceDemoPage {
     await this.lastNameInput.setValue(lastName);
     await this.postalCodeInput.setValue(postalCode);
     }
+
+    
 }
 
 export default SauceDemoPage;
