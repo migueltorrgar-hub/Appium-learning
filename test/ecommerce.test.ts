@@ -26,6 +26,10 @@ describe('SauceDemo shopping cart', () => {
 
         await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(2);
 
+        await expect(sauceDemoPage.productPrices[0]).toHaveText('$29.99');
+
+        await expect(sauceDemoPage.productPrices[1]).toHaveText('$9.99');
+
         await expect(sauceDemoPage.productNames[0]).toHaveText(
               PRODUCT_NAMES.backpack
         );
