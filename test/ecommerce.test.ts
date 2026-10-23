@@ -63,4 +63,24 @@ describe('SauceDemo shopping cart', () => {
         await sauceDemoPage.getCartItemCount()
     ).toBe(0);
     });
+
+    it('should navigate to checkout overview', async () => {
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
+
+    await sauceDemoPage.openShoppingCart();
+    await sauceDemoPage.clickCheckout();
+
+    await sauceDemoPage.enterCheckoutInformation(
+        'Miguel',
+        'Torres',
+        '03008'
+    );
+
+    await sauceDemoPage.clickContinue();
+
+    await expect($('.summary_subtotal_label')).toHaveText(
+        'Item total: $39.98'
+    );
+    });
 });
