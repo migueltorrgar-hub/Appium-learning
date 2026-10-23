@@ -37,6 +37,16 @@ class SauceDemoPage {
         return $$('.inventory_item_name');
     }
 
+   async resetCart(): Promise<void> {
+        await browser.execute(() => {
+        window.localStorage.removeItem('cart-contents');
+    });
+}
+
+    async getCartItemCount(): Promise<number> {
+        return (await this.productNames).length;
+    }
+
     async open(): Promise<void> {
         await browser.url(this.url);
     }
@@ -45,6 +55,7 @@ class SauceDemoPage {
         await this.usernameInput.setValue(username);
         await this.passwordInput.setValue(password);
         await this.loginButton.click();
+         await $('.inventory_list').waitForDisplayed({ timeout: 10000 });
     }
 
     async addProductToCart(productId: string): Promise<void> {

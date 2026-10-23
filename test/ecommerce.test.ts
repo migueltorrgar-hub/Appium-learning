@@ -1,6 +1,6 @@
 
 
-import { expect } from '@wdio/globals';
+import { $, expect } from '@wdio/globals';
 import SauceDemoPage, { PRODUCTS, PRODUCT_NAMES } from '../pageobjects/SauceDemoPage';
 
 
@@ -9,6 +9,7 @@ describe('SauceDemo shopping cart', () => {
 
     beforeEach(async () => {
         await sauceDemoPage.open();
+        await sauceDemoPage.resetCart();
         await sauceDemoPage.login('standard_user', 'secret_sauce');
     });
 
@@ -42,5 +43,20 @@ describe('SauceDemo shopping cart', () => {
         await expect(sauceDemoPage.productNames[0]).toHaveText(
             PRODUCT_NAMES.backpack
         );
+    });
+
+
+    it('should show an empty cart after removing all products', async () => {
+    await expect($('.inventory_list')).toBeDisplayed();
+
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+
+    await sauceDemoPage.openShoppingCart();
+
+    await sauceDemoPage.removeProductFromCart(PRODUCTS.backpack);
+
+    await expect(
+        await sauceDemoPage.getCartItemCount()
+    ).toBe(0);
     });
 });
