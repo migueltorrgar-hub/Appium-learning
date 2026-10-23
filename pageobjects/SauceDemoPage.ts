@@ -37,6 +37,10 @@ class SauceDemoPage {
         return $$('.inventory_item_name');
     }
 
+    get productPrices() {
+        return $$('.inventory_item_price');
+    }
+
    async resetCart(): Promise<void> {
         await browser.execute(() => {
         window.localStorage.removeItem('cart-contents');
