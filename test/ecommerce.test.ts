@@ -87,4 +87,30 @@ describe('SauceDemo shopping cart', () => {
 
     await expect(sauceDemoPage.totalLabel).toHaveText('Total: $43.18');
     });
+
+    it('should show an error when checkout information is empty', async () => {
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.openShoppingCart();
+    await sauceDemoPage.clickCheckout();
+
+    await sauceDemoPage.clickContinue();
+
+    await expect(sauceDemoPage.checkoutError).toHaveText(
+        'Error: First Name is required'
+    );
+
+    await sauceDemoPage.firstNameInput.setValue('Paco');
+    await sauceDemoPage.clickContinue();
+
+    await expect(sauceDemoPage.checkoutError).toHaveText(
+    'Error: Last Name is required'
+    );
+
+    await sauceDemoPage.lastNameInput.setValue('Pil');
+    await sauceDemoPage.clickContinue();
+
+    await expect(sauceDemoPage.checkoutError).toHaveText(
+    'Error: Postal Code is required'
+    );
+    });
 });

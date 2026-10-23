@@ -69,6 +69,10 @@ class SauceDemoPage {
         return $('.summary_total_label');
     }
 
+    get checkoutError() {
+        return $('[data-test="error"]');
+    }
+
    async resetCart(): Promise<void> {
         await browser.execute(() => {
         window.localStorage.removeItem('cart-contents');
