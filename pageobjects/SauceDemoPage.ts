@@ -132,6 +132,10 @@ class SauceDemoPage {
     await this.postalCodeInput.setValue(postalCode);
     }
 
+    async goBack(): Promise<void> {
+        await browser.back();
+    }
+
     
 }
 

@@ -113,4 +113,26 @@ describe('SauceDemo shopping cart', () => {
     'Error: Postal Code is required'
     );
     });
+
+    it('should preserve cart items after returning from checkout', async () => {
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
+
+    await sauceDemoPage.openShoppingCart();
+
+    await sauceDemoPage.clickCheckout();
+
+    await sauceDemoPage.goBack();
+
+    await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(2);
+    
+    await expect(sauceDemoPage.productNames[0]).toHaveText(
+        PRODUCT_NAMES.backpack
+    );
+
+    await expect(sauceDemoPage.productNames[1]).toHaveText(
+        PRODUCT_NAMES.bikeLight
+    );
+    await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
+    });
 });
