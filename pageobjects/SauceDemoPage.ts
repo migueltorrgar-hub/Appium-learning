@@ -73,6 +73,18 @@ class SauceDemoPage {
         return $('[data-test="error"]');
     }
 
+    get finishButton() {
+        return $('#finish');
+    }
+
+    get checkoutCompleteHeader() {
+        return $('.complete-header');
+    }
+
+    get checkoutCompleteText() {
+        return $('.complete-text');
+    }
+
    async resetCart(): Promise<void> {
         await browser.execute(() => {
         window.localStorage.removeItem('cart-contents');
@@ -134,6 +146,11 @@ class SauceDemoPage {
 
     async goBack(): Promise<void> {
         await browser.back();
+    }
+
+
+    async clickFinish(): Promise<void> {
+        await this.finishButton.click();
     }
 
     
