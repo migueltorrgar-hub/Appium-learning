@@ -1,4 +1,4 @@
-import { $, $$, browser } from '@wdio/globals';
+import { $, $$, browser, expect } from '@wdio/globals';
 
 export const PRODUCTS = {
     backpack: 'sauce-labs-backpack',
@@ -151,6 +151,18 @@ class SauceDemoPage {
 
     async clickFinish(): Promise<void> {
         await this.finishButton.click();
+    }
+
+    async expectCheckoutCompleted(): Promise<void> {
+        await expect(this.checkoutCompleteHeader).toHaveText(
+        'Thank you for your order!'
+        );
+    }
+
+    async expectCheckoutConfirmationMessage(): Promise<void> {
+        await expect(this.checkoutCompleteText).toHaveText(
+        'Your order has been dispatched, and will arrive just as fast as the pony can get there!'
+        );
     }
 
     
