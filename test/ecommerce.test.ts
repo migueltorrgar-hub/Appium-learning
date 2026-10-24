@@ -150,12 +150,7 @@ describe('SauceDemo shopping cart', () => {
     await sauceDemoPage.clickContinue();
     await sauceDemoPage.clickFinish();
 
-    await expect(sauceDemoPage.checkoutCompleteHeader).toHaveText(
-        'Thank you for your order!'
-    );
-
-    await expect(sauceDemoPage.checkoutCompleteText).toHaveText(
-    'Your order has been dispatched, and will arrive just as fast as the pony can get there!'
-    );
+    await sauceDemoPage.expectCheckoutCompleted();
+    await sauceDemoPage.expectCheckoutConfirmationMessage();
     });
 });
