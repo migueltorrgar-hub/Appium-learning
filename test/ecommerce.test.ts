@@ -135,4 +135,27 @@ describe('SauceDemo shopping cart', () => {
     );
     await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
     });
+
+    it('should complete the checkout successfully', async () => {
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.openShoppingCart();
+    await sauceDemoPage.clickCheckout();
+
+    await sauceDemoPage.enterCheckoutInformation(
+        'Paco',
+        'Pil',
+        '03123'
+    );
+
+    await sauceDemoPage.clickContinue();
+    await sauceDemoPage.clickFinish();
+
+    await expect(sauceDemoPage.checkoutCompleteHeader).toHaveText(
+        'Thank you for your order!'
+    );
+
+    await expect(sauceDemoPage.checkoutCompleteText).toHaveText(
+    'Your order has been dispatched, and will arrive just as fast as the pony can get there!'
+    );
+    });
 });
