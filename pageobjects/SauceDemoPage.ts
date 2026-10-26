@@ -45,6 +45,10 @@ class SauceDemoPage {
         return $$('.inventory_item_name');
     }
 
+    get cartItemNames() {
+        return $$('.cart_item .inventory_item_name');
+    }
+
     get productPrices() {
         return $$('.inventory_item_price');
     }
@@ -93,6 +97,21 @@ class SauceDemoPage {
 
     async getCartItemCount(): Promise<number> {
         return (await this.productNames).length;
+    }
+
+    async expectProductInCart(productName: string): Promise<void> {
+    const cartItemNames = await this.cartItemNames;
+
+    let productExists = false;
+
+    for (const element of cartItemNames) {
+        if ((await element.getText()) === productName) {
+            productExists = true;
+            break;
+        }
+    }
+
+    await expect(productExists).toBe(true);
     }
 
     async open(): Promise<void> {
