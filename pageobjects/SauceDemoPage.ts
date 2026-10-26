@@ -129,6 +129,21 @@ class SauceDemoPage {
     }
     }
 
+
+    async calculateCartSubtotal(): Promise<number> {
+    const productPrices = await this.productPrices;
+    let subtotal = 0;
+
+    for (const element of productPrices) {
+        const priceText = await element.getText();
+        const price = parseFloat(priceText.replace('$', ''));
+
+        subtotal += price;
+    }
+
+    return subtotal;
+    }
+
     async open(): Promise<void> {
         await browser.url(this.url);
     }
