@@ -30,6 +30,10 @@ describe('SauceDemo shopping cart', () => {
 
         await expect(sauceDemoPage.productPrices[1]).toHaveText('$9.99');
 
+        const subtotal = await sauceDemoPage.calculateCartSubtotal();
+
+        expect(subtotal).toBeCloseTo(39.98, 2);
+
         await sauceDemoPage.expectCartToContainProducts([
         PRODUCT_NAMES.backpack,
         PRODUCT_NAMES.bikeLight
