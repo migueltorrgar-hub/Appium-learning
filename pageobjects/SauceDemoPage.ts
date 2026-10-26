@@ -114,6 +114,21 @@ class SauceDemoPage {
     await expect(productExists).toBe(true);
     }
 
+    async expectCartToContainProducts(expectedProductNames: string[]): Promise<void> {
+    const cartItemNames = await this.cartItemNames;
+    const actualProductNames: string[] = [];
+
+    for (const element of cartItemNames) {
+        actualProductNames.push(await element.getText());
+    }
+
+    expect(actualProductNames).toHaveLength(expectedProductNames.length);
+
+    for (const productName of expectedProductNames) {
+        await expect(actualProductNames).toContain(productName);
+    }
+    }
+
     async open(): Promise<void> {
         await browser.url(this.url);
     }
