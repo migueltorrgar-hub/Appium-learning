@@ -30,12 +30,12 @@ describe('SauceDemo shopping cart', () => {
 
         await expect(sauceDemoPage.productPrices[1]).toHaveText('$9.99');
 
-        await expect(sauceDemoPage.productNames[0]).toHaveText(
-              PRODUCT_NAMES.backpack
+        await sauceDemoPage.expectProductInCart(
+        PRODUCT_NAMES.backpack
         );
 
-        await expect(sauceDemoPage.productNames[1]).toHaveText(
-             PRODUCT_NAMES.bikeLight
+        await sauceDemoPage.expectProductInCart(
+        PRODUCT_NAMES.bikeLight
         );
 
         await sauceDemoPage.removeProductFromCart(PRODUCTS.bikeLight);
@@ -44,8 +44,8 @@ describe('SauceDemo shopping cart', () => {
 
         await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(1);
 
-        await expect(sauceDemoPage.productNames[0]).toHaveText(
-            PRODUCT_NAMES.backpack
+        await sauceDemoPage.expectProductInCart(
+        PRODUCT_NAMES.backpack
         );
     });
 
