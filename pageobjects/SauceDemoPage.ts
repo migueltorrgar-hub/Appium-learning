@@ -148,6 +148,12 @@ class SauceDemoPage {
         await browser.url(this.url);
     }
 
+    async expectCartSubtotal(expectedSubtotal: number): Promise<void> {
+    const actualSubtotal = await this.calculateCartSubtotal();
+
+    expect(actualSubtotal).toBeCloseTo(expectedSubtotal, 2);
+    }
+
     async login(username: string, password: string): Promise<void> {
         await this.usernameInput.setValue(username);
         await this.passwordInput.setValue(password);
