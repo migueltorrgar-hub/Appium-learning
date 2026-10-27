@@ -81,6 +81,10 @@ class SauceDemoPage {
         return $('#finish');
     }
 
+    get cancelButton() {
+        return $('#cancel');
+    }
+
     get checkoutCompleteHeader() {
         return $('.complete-header');
     }
@@ -231,6 +235,10 @@ class SauceDemoPage {
 
     async clickFinish(): Promise<void> {
         await this.finishButton.click();
+    }
+
+    async clickCancel(): Promise<void> {
+        await this.cancelButton.click();
     }
 
     async expectCheckoutCompleted(): Promise<void> {

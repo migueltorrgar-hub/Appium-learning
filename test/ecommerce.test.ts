@@ -167,4 +167,38 @@ describe('SauceDemo shopping cart', () => {
         await sauceDemoPage.getCartItemCount()
         ).toBe(0);
 });
+
+
+it('should return to products page when cancelling checkout', async () => {
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
+
+    await sauceDemoPage.openShoppingCart();
+    await sauceDemoPage.clickCheckout();
+
+    await sauceDemoPage.enterCheckoutInformation(
+        'Paco',
+        'Pil',
+        '03123'
+    );
+
+    await sauceDemoPage.clickContinue();
+    await sauceDemoPage.clickCancel();
+
+    await expect($('.inventory_list')).toBeDisplayed();
+
+    await sauceDemoPage.openShoppingCart();
+
+    await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(2);
+
+    await expect(sauceDemoPage.productNames[0]).toHaveText(
+        PRODUCT_NAMES.backpack
+    );
+
+    await expect(sauceDemoPage.productNames[1]).toHaveText(
+        PRODUCT_NAMES.bikeLight
+    );
+
+    await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
+});
 });
