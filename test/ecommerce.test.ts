@@ -78,13 +78,7 @@ describe('SauceDemo shopping cart', () => {
 
     await sauceDemoPage.clickContinue();
 
-    await expect($('.summary_subtotal_label')).toHaveText(
-        'Item total: $39.98'
-    );
-    
-    await expect(sauceDemoPage.taxLabel).toHaveText('Tax: $3.20');
-
-    await expect(sauceDemoPage.totalLabel).toHaveText('Total: $43.18');
+    await sauceDemoPage.expectCheckoutSummary(39.98, 3.20, 43.18);
     });
 
     it('should show an error when checkout information is empty', async () => {
