@@ -154,6 +154,31 @@ class SauceDemoPage {
     expect(actualSubtotal).toBeCloseTo(expectedSubtotal, 2);
     }
 
+    async expectCheckoutSummary(
+    expectedSubtotal: number,
+    expectedTax: number,
+    expectedTotal: number
+    ): Promise<void> {
+    const subtotalLabel = await $('.summary_subtotal_label').getText();
+    const actualSubtotal = parseFloat(
+        subtotalLabel.replace('Item total: $', '')
+    );
+
+    const taxLabel = await this.taxLabel.getText();
+    const actualTax = parseFloat(
+        taxLabel.replace('Tax: $', '')
+    );
+
+    const totalLabel = await this.totalLabel.getText();
+    const actualTotal = parseFloat(
+        totalLabel.replace('Total: $', '')
+    );
+
+    expect(actualSubtotal).toBeCloseTo(expectedSubtotal, 2);
+    expect(actualTax).toBeCloseTo(expectedTax, 2);
+    expect(actualTotal).toBeCloseTo(expectedTotal, 2);
+    }
+
     async login(username: string, password: string): Promise<void> {
         await this.usernameInput.setValue(username);
         await this.passwordInput.setValue(password);
