@@ -146,4 +146,25 @@ describe('SauceDemo shopping cart', () => {
     await sauceDemoPage.expectCheckoutCompleted();
     await sauceDemoPage.expectCheckoutConfirmationMessage();
     });
+
+    it('should have an empty cart after completing checkout', async () => {
+    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.openShoppingCart();
+    await sauceDemoPage.clickCheckout();
+
+    await sauceDemoPage.enterCheckoutInformation(
+        'Paco',
+        'Pil',
+        '03123'
+    );
+
+    await sauceDemoPage.clickContinue();
+    await sauceDemoPage.clickFinish();
+
+    await sauceDemoPage.openShoppingCart();
+
+    await expect(
+        await sauceDemoPage.getCartItemCount()
+        ).toBe(0);
+});
 });
