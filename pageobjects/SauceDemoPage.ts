@@ -45,6 +45,10 @@ class SauceDemoPage {
         return $$('.inventory_item_name');
     }
 
+    get inventoryItemPrices() {
+        return $$('.inventory_item_price');
+    }
+
     get cartItemNames() {
         return $$('.cart_item .inventory_item_name');
     }
@@ -91,6 +95,10 @@ class SauceDemoPage {
 
     get checkoutCompleteText() {
         return $('.complete-text');
+    }
+
+    get productSort() {
+        return $('.product_sort_container');
     }
 
    async resetCart(): Promise<void> {
@@ -204,6 +212,13 @@ class SauceDemoPage {
 
     async clickContinue(): Promise<void> {
         await this.continueButton.click();
+    }
+
+
+    async sortProductsByPriceLowToHigh(): Promise<void> {
+        await this.productSort.selectByVisibleText(
+        'Price (low to high)'
+        );
     }
 
     async removeProductFromCart(productId: string): Promise<void> {
