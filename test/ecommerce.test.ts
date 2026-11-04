@@ -201,4 +201,28 @@ it('should return to products page when cancelling checkout', async () => {
 
     await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
 });
+
+
+
+it('should sort products by price from low to high', async () => {
+    await sauceDemoPage.sortProductsByPriceLowToHigh();
+
+    const prices = await sauceDemoPage.inventoryItemPrices;
+
+    const actualPrices: number[] = [];
+
+    for (const element of prices) {
+        const priceText = await element.getText();
+        actualPrices.push(
+            parseFloat(priceText.replace('$', ''))
+        );
+    }
+
+    const sortedPrices = [...actualPrices].sort(
+        (a, b) => a - b
+    );
+
+    expect(actualPrices).toEqual(sortedPrices);
+});
+
 });
