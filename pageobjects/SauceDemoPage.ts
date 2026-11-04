@@ -221,6 +221,10 @@ class SauceDemoPage {
         );
     }
 
+    async sortProductsByPriceHighToLow(): Promise<void> {
+        await this.productSort.selectByVisibleText('Price (high to low)');
+    }
+
     async removeProductFromCart(productId: string): Promise<void> {
         await this.removeFromCartButton(productId).click();
     }

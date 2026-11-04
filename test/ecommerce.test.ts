@@ -225,4 +225,20 @@ it('should sort products by price from low to high', async () => {
     expect(actualPrices).toEqual(sortedPrices);
 });
 
+it('should sort products by price from high to low', async () => {
+    await sauceDemoPage.sortProductsByPriceHighToLow();
+
+    const prices = await sauceDemoPage.inventoryItemPrices;
+    const actualPrices: number[] = [];
+
+    for (const element of prices) {
+        const priceText = await element.getText();
+        actualPrices.push(parseFloat(priceText.replace('$', '')));
+    }
+
+    const sortedPrices = [...actualPrices].sort((a, b) => b - a);
+
+    expect(actualPrices).toEqual(sortedPrices);
+});
+
 });
