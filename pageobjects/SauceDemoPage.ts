@@ -113,6 +113,14 @@ class SauceDemoPage {
         return $('.inventory_details_price');
     }
 
+    get productDetailAddToCartButton() {
+        return $('.inventory_details_desc_container button');
+    }
+
+    get productDetailRemoveButton() {
+        return $('.inventory_details_desc_container button');
+    }
+
    async resetCart(): Promise<void> {
         await browser.execute(() => {
         window.localStorage.removeItem('cart-contents');
@@ -254,6 +262,10 @@ class SauceDemoPage {
         }
 
         await product.click();
+    }
+
+    async addProductFromDetails(): Promise<void> {
+        await this.productDetailAddToCartButton.click();
     }
 
     async removeProductFromCart(productId: string): Promise<void> {
