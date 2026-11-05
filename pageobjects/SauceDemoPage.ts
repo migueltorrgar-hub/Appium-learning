@@ -268,6 +268,10 @@ class SauceDemoPage {
         await this.productDetailAddToCartButton.click();
     }
 
+    async removeProductFromDetails(): Promise<void> {
+        await this.productDetailRemoveButton.click();
+    }
+
     async removeProductFromCart(productId: string): Promise<void> {
         await this.removeFromCartButton(productId).click();
     }

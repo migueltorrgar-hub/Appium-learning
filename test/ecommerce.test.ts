@@ -323,4 +323,16 @@ it('should add a product to the cart from its details page', async () => {
     expect(productNames).toContain('Sauce Labs Backpack');
 });
 
+it('should remove a product from the cart from its details page', async () => {
+    await sauceDemoPage.openProductDetails('Sauce Labs Backpack');
+
+    await sauceDemoPage.addProductFromDetails();
+    await sauceDemoPage.removeProductFromDetails();
+
+    const buttonText = await sauceDemoPage.productDetailAddToCartButton.getText();
+
+    expect(buttonText).toBe('Add to cart');
+    expect(await sauceDemoPage.shoppingCartBadge.isDisplayed()).toBe(false);
+});
+
 });
