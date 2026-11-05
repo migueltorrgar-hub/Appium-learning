@@ -241,4 +241,38 @@ it('should sort products by price from high to low', async () => {
     expect(actualPrices).toEqual(sortedPrices);
 });
 
+it('should sort products by name from A to Z', async () => {
+    await sauceDemoPage.sortProductsByNameAtoZ();
+
+    const productElements = await sauceDemoPage.productNames;
+    const actualNames: string[] = [];
+
+    for (const element of productElements) {
+        actualNames.push(await element.getText());
+    }
+
+    const sortedNames = [...actualNames].sort((a, b) =>
+        a.localeCompare(b)
+    );
+
+    expect(actualNames).toEqual(sortedNames);
+});
+
+it('should sort products by name from Z to A', async () => {
+    await sauceDemoPage.sortProductsByNameZtoA();
+
+    const productElements = await sauceDemoPage.productNames;
+    const actualNames: string[] = [];
+
+    for (const element of productElements) {
+        actualNames.push(await element.getText());
+    }
+
+    const sortedNames = [...actualNames].sort((a, b) =>
+        b.localeCompare(a)
+    );
+
+    expect(actualNames).toEqual(sortedNames);
+});
+
 });

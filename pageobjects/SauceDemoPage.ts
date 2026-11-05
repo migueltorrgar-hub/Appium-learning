@@ -225,6 +225,14 @@ class SauceDemoPage {
         await this.productSort.selectByVisibleText('Price (high to low)');
     }
 
+    async sortProductsByNameAtoZ(): Promise<void> {
+        await this.productSort.selectByVisibleText('Name (A to Z)');
+    }
+
+    async sortProductsByNameZtoA(): Promise<void> {
+        await this.productSort.selectByVisibleText('Name (Z to A)');
+    }
+
     async removeProductFromCart(productId: string): Promise<void> {
         await this.removeFromCartButton(productId).click();
     }
