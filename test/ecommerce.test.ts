@@ -289,4 +289,18 @@ it('should display correct details for Sauce Labs Backpack', async () => {
     expect(productPrice).toBe('$29.99');
 });
 
+it('should display correct details for Sauce Labs Bike Light', async () => {
+    await sauceDemoPage.openProductDetails('Sauce Labs Bike Light');
+
+    const productName = await sauceDemoPage.productDetailName.getText();
+    const productDescription = await sauceDemoPage.productDetailDescription.getText();
+    const productPrice = await sauceDemoPage.productDetailPrice.getText();
+
+    expect(productName).toBe('Sauce Labs Bike Light');
+    expect(productDescription).toBe(
+        "A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
+    );
+    expect(productPrice).toBe('$9.99');
+});
+
 });
