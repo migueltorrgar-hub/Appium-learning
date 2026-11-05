@@ -101,6 +101,18 @@ class SauceDemoPage {
         return $('.product_sort_container');
     }
 
+    get productDetailName() {
+        return $('.inventory_details_name');
+    }
+
+    get productDetailDescription() {
+        return $('.inventory_details_desc');
+    }
+
+    get productDetailPrice() {
+        return $('.inventory_details_price');
+    }
+
    async resetCart(): Promise<void> {
         await browser.execute(() => {
         window.localStorage.removeItem('cart-contents');
@@ -231,6 +243,17 @@ class SauceDemoPage {
 
     async sortProductsByNameZtoA(): Promise<void> {
         await this.productSort.selectByVisibleText('Name (Z to A)');
+    }
+
+    async openProductDetails(productName: string): Promise<void> {
+        const product = await $$('.inventory_item_name')
+        .find(async (element) => await element.getText() === productName);
+
+        if (!product) {
+        throw new Error(`Product "${productName}" was not found`);
+        }
+
+        await product.click();
     }
 
     async removeProductFromCart(productId: string): Promise<void> {
