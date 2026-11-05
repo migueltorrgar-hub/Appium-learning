@@ -303,4 +303,24 @@ it('should display correct details for Sauce Labs Bike Light', async () => {
     expect(productPrice).toBe('$9.99');
 });
 
+it('should add a product to the cart from its details page', async () => {
+    await sauceDemoPage.openProductDetails('Sauce Labs Backpack');
+
+    await sauceDemoPage.addProductFromDetails();
+
+    const buttonText = await sauceDemoPage.productDetailRemoveButton.getText();
+    const cartCount = await sauceDemoPage.shoppingCartBadge.getText();
+
+    expect(buttonText).toBe('Remove');
+    expect(cartCount).toBe('1');
+
+    await sauceDemoPage.shoppingCartLink.click();
+
+    const productNames = await sauceDemoPage.cartItemNames.map(
+    product => product.getText()
+    );
+
+    expect(productNames).toContain('Sauce Labs Backpack');
+});
+
 });
