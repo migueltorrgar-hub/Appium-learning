@@ -275,4 +275,18 @@ it('should sort products by name from Z to A', async () => {
     expect(actualNames).toEqual(sortedNames);
 });
 
+it('should display correct details for Sauce Labs Backpack', async () => {
+    await sauceDemoPage.openProductDetails('Sauce Labs Backpack');
+
+    const productName = await sauceDemoPage.productDetailName.getText();
+    const productDescription = await sauceDemoPage.productDetailDescription.getText();
+    const productPrice = await sauceDemoPage.productDetailPrice.getText();
+
+    expect(productName).toBe('Sauce Labs Backpack');
+    expect(productDescription).toBe(
+        'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.'
+    );
+    expect(productPrice).toBe('$29.99');
+});
+
 });
