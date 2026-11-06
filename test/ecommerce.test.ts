@@ -335,4 +335,32 @@ it('should remove a product from the cart from its details page', async () => {
     expect(await sauceDemoPage.shoppingCartBadge.isDisplayed()).toBe(false);
 });
 
+it('should add multiple products to the cart from their details pages', async () => {
+    await sauceDemoPage.openProductDetails(PRODUCT_NAMES.backpack);
+
+    await sauceDemoPage.addProductFromDetails();
+
+    await sauceDemoPage.goBack();
+
+    await sauceDemoPage.openProductDetails(PRODUCT_NAMES.bikeLight);
+
+    await sauceDemoPage.addProductFromDetails();
+
+    await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
+
+    await sauceDemoPage.openShoppingCart();
+
+    await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(2);
+
+    await sauceDemoPage.expectCartToContainProducts([
+        PRODUCT_NAMES.backpack,
+        PRODUCT_NAMES.bikeLight
+    ]);
+
+    await expect(sauceDemoPage.productPrices[0]).toHaveText('$29.99');
+    await expect(sauceDemoPage.productPrices[1]).toHaveText('$9.99');
+
+    await sauceDemoPage.expectCartSubtotal(39.98);
+});
+
 });
