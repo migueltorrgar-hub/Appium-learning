@@ -3,6 +3,18 @@
 import { $, expect } from '@wdio/globals';
 import SauceDemoPage, { PRODUCTS, PRODUCT_NAMES } from '../pageobjects/SauceDemoPage';
 
+const selectedProducts = [
+    {
+        id: PRODUCTS.backpack,
+        name: PRODUCT_NAMES.backpack,
+        price: 29.99,
+    },
+    {
+        id: PRODUCTS.bikeLight,
+        name: PRODUCT_NAMES.bikeLight,
+        price: 9.99,
+    },
+];
 
 describe('SauceDemo shopping cart', () => {
     const sauceDemoPage = new SauceDemoPage();
@@ -14,38 +26,56 @@ describe('SauceDemo shopping cart', () => {
     });
 
     it('should add two products to the shopping cart', async () => {
-        await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
 
-        await expect(sauceDemoPage.shoppingCartBadge).toHaveText('1');
+         const expectedSubtotal = selectedProducts.reduce(
+        (total, product) => total + product.price,
+        0
+        );
+       for (const product of selectedProducts) {
+        await sauceDemoPage.addProductToCart(product.id);
+        }
 
-        await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
-
-        await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
-
+        await expect(sauceDemoPage.shoppingCartBadge).toHaveText(
+        selectedProducts.length.toString()
+        );
         await sauceDemoPage.openShoppingCart();
 
-        await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(2);
+       await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(
+        selectedProducts.length
+    );
 
-        await expect(sauceDemoPage.productPrices[0]).toHaveText('$29.99');
+    for (const [index, product] of selectedProducts.entries()) {
+        await expect(sauceDemoPage.productNames[index]).toHaveText(product.name);
 
-        await expect(sauceDemoPage.productPrices[1]).toHaveText('$9.99');
-
-        await sauceDemoPage.expectCartSubtotal(39.98);
-
-        await sauceDemoPage.expectCartToContainProducts([
-        PRODUCT_NAMES.backpack,
-        PRODUCT_NAMES.bikeLight
-        ]);
-
-        await sauceDemoPage.removeProductFromCart(PRODUCTS.bikeLight);
-
-        await expect(sauceDemoPage.shoppingCartBadge).toHaveText('1');
-
-        await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(1);
-
-        await sauceDemoPage.expectProductInCart(
-        PRODUCT_NAMES.backpack
+        await expect(sauceDemoPage.productPrices[index]).toHaveText(
+            `$${product.price.toFixed(2)}`
         );
+    }
+        await sauceDemoPage.expectCartSubtotal(expectedSubtotal);
+
+        await sauceDemoPage.expectCartToContainProducts(
+        selectedProducts.map(product => product.name)
+    );
+
+        const productToRemove = selectedProducts[1];
+
+        await sauceDemoPage.removeProductFromCart(productToRemove.id);
+
+        const remainingProducts = selectedProducts.filter(
+        product => product.id !== productToRemove.id
+    );
+
+    await expect(sauceDemoPage.shoppingCartBadge).toHaveText(
+    remainingProducts.length.toString()
+    );
+
+    await expect(sauceDemoPage.productNames).toBeElementsArrayOfSize(
+    remainingProducts.length
+    );
+
+    await sauceDemoPage.expectCartToContainProducts(
+    remainingProducts.map(product => product.name)
+    );
     });
 
 
