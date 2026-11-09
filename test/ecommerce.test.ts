@@ -101,8 +101,17 @@ describe('SauceDemo shopping cart', () => {
     });
 
     it('should navigate to checkout overview', async () => {
-    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
-    await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
+        const expectedSubtotal = selectedProducts.reduce(
+        (total, product) => total + product.price,
+        0
+    );
+        const expectedTax = Number((expectedSubtotal * 0.08).toFixed(2));
+        const expectedTotal = Number(
+        (expectedSubtotal + expectedTax).toFixed(2)
+    );
+    for (const product of selectedProducts) {
+    await sauceDemoPage.addProductToCart(product.id);
+    }
 
     await sauceDemoPage.openShoppingCart();
     await sauceDemoPage.clickCheckout();
@@ -115,7 +124,11 @@ describe('SauceDemo shopping cart', () => {
 
     await sauceDemoPage.clickContinue();
 
-    await sauceDemoPage.expectCheckoutSummary(39.98, 3.20, 43.18);
+    await sauceDemoPage.expectCheckoutSummary(
+    expectedSubtotal,
+    expectedTax,
+    expectedTotal
+    );
     });
 
     it('should show an error when checkout information is empty', async () => {
