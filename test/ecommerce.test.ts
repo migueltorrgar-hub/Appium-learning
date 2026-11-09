@@ -65,6 +65,13 @@ describe('SauceDemo shopping cart', () => {
         product => product.id !== productToRemove.id
     );
 
+        const expectedRemainingSubtotal = remainingProducts.reduce(
+        (total, product) => total + product.price,
+        0
+    );
+
+    await sauceDemoPage.expectCartSubtotal(expectedRemainingSubtotal);
+
     await expect(sauceDemoPage.shoppingCartBadge).toHaveText(
     remainingProducts.length.toString()
     );
