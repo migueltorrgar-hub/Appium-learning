@@ -179,9 +179,29 @@ describe('SauceDemo shopping cart', () => {
     await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
     });
 
-    it('should complete the checkout successfully', async () => {
+   it('should complete the checkout successfully with multiple products', async () => {
+    
+    const expectedSubtotal = selectedProducts.reduce(
+    (total, product) => total + product.price,
+    0
+    );
+
+    const expectedTax = Number((expectedSubtotal * 0.08).toFixed(2));
+
+    const expectedTotal = Number(
+    (expectedSubtotal + expectedTax).toFixed(2)
+    );
+    
+    
     await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
+    await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
+
     await sauceDemoPage.openShoppingCart();
+
+    await sauceDemoPage.expectCartToContainProducts(
+    selectedProducts.map(product => product.name)
+    );
+
     await sauceDemoPage.clickCheckout();
 
     await sauceDemoPage.enterCheckoutInformation(
@@ -191,6 +211,15 @@ describe('SauceDemo shopping cart', () => {
     );
 
     await sauceDemoPage.clickContinue();
+
+    await sauceDemoPage.expectCheckoutSummary(
+        expectedSubtotal,
+        expectedTax,
+        expectedTotal
+        
+    
+    );
+
     await sauceDemoPage.clickFinish();
 
     await sauceDemoPage.expectCheckoutCompleted();
