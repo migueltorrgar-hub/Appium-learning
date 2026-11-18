@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Backpack only",
+    "products": ["sauce-labs-backpack"]
+  },
+  {
+    "name": "Bike Light only",
+    "products": ["sauce-labs-bike-light"]
+  },
+  {
+    "name": "Backpack and Bike Light",
+    "products": [
+      "sauce-labs-backpack",
+      "sauce-labs-bike-light"
+    ]
+  }
+]
