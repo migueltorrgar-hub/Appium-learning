@@ -16,6 +16,24 @@ const selectedProducts = [
     },
 ];
 
+const checkoutScenarios = [
+    {
+        name: 'Backpack only',
+        products: [PRODUCTS.backpack],
+    },
+    {
+        name: 'Bike Light only',
+        products: [PRODUCTS.bikeLight],
+    },
+    {
+        name: 'Backpack and Bike Light',
+        products: [
+            PRODUCTS.backpack,
+            PRODUCTS.bikeLight
+        ],
+    },
+];
+
 describe('SauceDemo shopping cart', () => {
     const sauceDemoPage = new SauceDemoPage();
 
@@ -179,51 +197,59 @@ describe('SauceDemo shopping cart', () => {
     await expect(sauceDemoPage.shoppingCartBadge).toHaveText('2');
     });
 
-   it('should complete the checkout successfully with multiple products', async () => {
-    
-    const expectedSubtotal = selectedProducts.reduce(
-    (total, product) => total + product.price,
-    0
-    );
+    checkoutScenarios.forEach((scenario) => {
 
-    const expectedTax = Number((expectedSubtotal * 0.08).toFixed(2));
+    it(`should complete checkout with ${scenario.name}`, async () => {
 
-    const expectedTotal = Number(
-    (expectedSubtotal + expectedTax).toFixed(2)
-    );
-    
-    
-    await sauceDemoPage.addProductToCart(PRODUCTS.backpack);
-    await sauceDemoPage.addProductToCart(PRODUCTS.bikeLight);
+        const scenarioProducts = selectedProducts.filter(product =>
+            scenario.products.includes(product.id)
+        );
 
-    await sauceDemoPage.openShoppingCart();
+        const expectedSubtotal = scenarioProducts.reduce(
+            (total, product) => total + product.price,
+            0
+        );
 
-    await sauceDemoPage.expectCartToContainProducts(
-    selectedProducts.map(product => product.name)
-    );
+        const expectedTax = Number(
+            (expectedSubtotal * 0.08).toFixed(2)
+        );
 
-    await sauceDemoPage.clickCheckout();
+        const expectedTotal = Number(
+            (expectedSubtotal + expectedTax).toFixed(2)
+        );
 
-    await sauceDemoPage.enterCheckoutInformation(
-        'Paco',
-        'Pil',
-        '03123'
-    );
+        for (const product of scenario.products) {
+            await sauceDemoPage.addProductToCart(product);
+        }
 
-    await sauceDemoPage.clickContinue();
+        await sauceDemoPage.openShoppingCart();
 
-    await sauceDemoPage.expectCheckoutSummary(
-        expectedSubtotal,
-        expectedTax,
-        expectedTotal
-        
-    
-    );
+        await sauceDemoPage.expectCartToContainProducts(
+            scenarioProducts.map(product => product.name)
+        );
 
-    await sauceDemoPage.clickFinish();
+        await sauceDemoPage.clickCheckout();
 
-    await sauceDemoPage.expectCheckoutCompleted();
-    await sauceDemoPage.expectCheckoutConfirmationMessage();
+        await sauceDemoPage.enterCheckoutInformation(
+            'Paco',
+            'Pil',
+            '03123'
+        );
+
+        await sauceDemoPage.clickContinue();
+
+        await sauceDemoPage.expectCheckoutSummary(
+            expectedSubtotal,
+            expectedTax,
+            expectedTotal
+        );
+
+        await sauceDemoPage.clickFinish();
+
+        await sauceDemoPage.expectCheckoutCompleted();
+        await sauceDemoPage.expectCheckoutConfirmationMessage();
+        });
+
     });
 
     it('should have an empty cart after completing checkout', async () => {
