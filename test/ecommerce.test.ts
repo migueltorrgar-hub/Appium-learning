@@ -2,6 +2,7 @@
 
 import { $, expect } from '@wdio/globals';
 import SauceDemoPage, { PRODUCTS, PRODUCT_NAMES } from '../pageobjects/SauceDemoPage';
+import checkoutScenarios from './test-data/checkout-scenarios.json';
 
 const selectedProducts = [
     {
@@ -16,26 +17,10 @@ const selectedProducts = [
     },
 ];
 
-const checkoutScenarios = [
-    {
-        name: 'Backpack only',
-        products: [PRODUCTS.backpack],
-    },
-    {
-        name: 'Bike Light only',
-        products: [PRODUCTS.bikeLight],
-    },
-    {
-        name: 'Backpack and Bike Light',
-        products: [
-            PRODUCTS.backpack,
-            PRODUCTS.bikeLight
-        ],
-    },
-];
 
 describe('SauceDemo shopping cart', () => {
     const sauceDemoPage = new SauceDemoPage();
+    
 
     beforeEach(async () => {
         await sauceDemoPage.open();
