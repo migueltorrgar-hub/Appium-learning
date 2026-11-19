@@ -3,20 +3,12 @@
 import { $, expect } from '@wdio/globals';
 import SauceDemoPage, { PRODUCTS, PRODUCT_NAMES } from '../pageobjects/SauceDemoPage';
 import checkoutScenarios from './test-data/checkout-scenarios.json';
+import { createSelectedProducts } from './test-data/ecommerce-data';
 
-const selectedProducts = [
-    {
-        id: PRODUCTS.backpack,
-        name: PRODUCT_NAMES.backpack,
-        price: 29.99,
-    },
-    {
-        id: PRODUCTS.bikeLight,
-        name: PRODUCT_NAMES.bikeLight,
-        price: 9.99,
-    },
-];
-
+const selectedProducts = createSelectedProducts([
+    'backpack',
+    'bikeLight',
+]);
 
 describe('SauceDemo shopping cart', () => {
     const sauceDemoPage = new SauceDemoPage();
