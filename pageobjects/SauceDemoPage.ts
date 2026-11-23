@@ -77,7 +77,7 @@ class SauceDemoPage {
         return $('.summary_total_label');
     }
 
-    get checkoutError() {
+    get errorMessage() {
         return $('[data-test="error"]');
     }
 
@@ -211,11 +211,19 @@ class SauceDemoPage {
     expect(actualTotal).toBeCloseTo(expectedTotal, 2);
     }
 
-    async login(username: string, password: string): Promise<void> {
-        await this.usernameInput.setValue(username);
-        await this.passwordInput.setValue(password);
-        await this.loginButton.click();
-         await $('.inventory_list').waitForDisplayed({ timeout: 10000 });
+   async login(username: string, password: string): Promise<void> {
+    await this.usernameInput.setValue(username);
+    await this.passwordInput.setValue(password);
+    await this.loginButton.click();
+    }
+
+    async expectSuccessfulLogin(): Promise<void> {
+        await $('.inventory_list').waitForDisplayed({ timeout: 10000 });
+    }
+
+    async getLoginError(): Promise<string> {
+        await this.errorMessage.waitForDisplayed({ timeout: 5000 });
+        return await this.errorMessage.getText();
     }
 
     async addProductToCart(productId: string): Promise<void> {
@@ -254,14 +262,24 @@ class SauceDemoPage {
     }
 
     async openProductDetails(productName: string): Promise<void> {
-        const product = await $$('.inventory_item_name')
-        .find(async (element) => await element.getText() === productName);
+    const products = await $$('.inventory_item_name');
 
-        if (!product) {
-        throw new Error(`Product "${productName}" was not found`);
+    let productFound;
+
+    for (const product of products) {
+        const name = await product.getText();
+
+        if (name === productName) {
+            productFound = product;
+            break;
         }
+    }
 
-        await product.click();
+    if (!productFound) {
+        throw new Error(`Product "${productName}" was not found`);
+    }
+
+    await productFound.click();
     }
 
     async addProductFromDetails(): Promise<void> {

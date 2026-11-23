@@ -4,6 +4,7 @@ import { $, expect } from '@wdio/globals';
 import SauceDemoPage, { PRODUCTS, PRODUCT_NAMES } from '../pageobjects/SauceDemoPage';
 import checkoutScenarios from './test-data/checkout-scenarios.json';
 import { createSelectedProducts } from './test-data/ecommerce-data';
+import { createUser } from './test-data/user-data';
 
 const selectedProducts = createSelectedProducts([
     'backpack',
@@ -17,7 +18,10 @@ describe('SauceDemo shopping cart', () => {
     beforeEach(async () => {
         await sauceDemoPage.open();
         await sauceDemoPage.resetCart();
-        await sauceDemoPage.login('standard_user', 'secret_sauce');
+        
+        const user = createUser('standard');
+        await sauceDemoPage.login(user.username, user.password);
+        await sauceDemoPage.expectSuccessfulLogin();
     });
 
     it('should add two products to the shopping cart', async () => {
@@ -133,21 +137,21 @@ describe('SauceDemo shopping cart', () => {
 
     await sauceDemoPage.clickContinue();
 
-    await expect(sauceDemoPage.checkoutError).toHaveText(
+    await expect(sauceDemoPage.errorMessage).toHaveText(
         'Error: First Name is required'
     );
 
     await sauceDemoPage.firstNameInput.setValue('Paco');
     await sauceDemoPage.clickContinue();
 
-    await expect(sauceDemoPage.checkoutError).toHaveText(
+    await expect(sauceDemoPage.errorMessage).toHaveText(
     'Error: Last Name is required'
     );
 
     await sauceDemoPage.lastNameInput.setValue('Pil');
     await sauceDemoPage.clickContinue();
 
-    await expect(sauceDemoPage.checkoutError).toHaveText(
+    await expect(sauceDemoPage.errorMessage).toHaveText(
     'Error: Postal Code is required'
     );
     });
