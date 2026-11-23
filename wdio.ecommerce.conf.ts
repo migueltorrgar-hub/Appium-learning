@@ -5,7 +5,9 @@ export const config = {
 
     automationProtocol: 'webdriver',
 
-    specs: ['./test/ecommerce.test.ts'],
+    specs: ['./test/ecommerce.test.ts',
+         './test/authentication.test.ts',
+    ],
 
     capabilities: [
         {
